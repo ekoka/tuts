@@ -25,3 +25,10 @@
 
     - No cycle is possible since a node is never processed twice. As the tree is growing outwardly, if a node is chosen for processing (i.e. for inclusion in the tree) it means that among all the edges currently discovered, the node's lightest edge should be selected (since it connects it to the growing side of the tree). Once thus connected to the tree, the node becomes part of the tree. Any other edge that might henceforth connect to it and that does not create a cycle, is actually the edge connecting another outer node to the tree.
 
+
+Prim vs Djikstra
+---
+Both algorithm look very similar and at first the distinction might not be obvious. But Prim's is concerned with the shortest distance from any node to the *tree*, whereas Djikstra's is concerned with the shortest path from one *node* to other nodes.
+
+    [illustration]
+
