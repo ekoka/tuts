@@ -85,7 +85,7 @@ This gives us the basis of a scheme to write any base-10 value containing fracti
 - now that we have the isolated fractional part, we can process it.
 
 Processing fractional parts (approach through doubling)
--------------------------------------------------------
+---
 1-) first thing is to double the fractional value and check if the new doubled value is larger or equal to 1. Remember that the first fractional power of 2 is the decimal 0.5 or binary 0.1. As we've seen, doubling that fractional binary number means shifting its bit to the left by 1.
 
 2.a-) If the new (doubled) value is less than 1, it means that the pre-doubled value was less than decimal .5, thus could not have started with a leading 1 bit after the period. We thus record a 0 for that position instead. 
