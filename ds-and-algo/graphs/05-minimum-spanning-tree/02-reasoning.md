@@ -1,0 +1,103 @@
+- Imagine that the graph that you start with already forms a tree that connects all its nodes. By definition a tree is acyclic, so the graph has no cycle.
+
+    [illustration]
+
+- All the nodes are connected and there's no cycle, thus the graph itself is already an MST, regarldless of the weight of its edges.
+
+- now, imagine that you're handed a few supplementary weighted edges on the side and you're told that you can add them any way you wish to the graph, as long as each new edge connects two existing nodes.
+
+    [illustration]
+
+- Since all the nodes are already connected to each other, adding any new edge between two nodes creates a secondary path between them, the original path and the new edge now form a cycle. The graph is still connected, but since there's a cycle, it is no longer a tree, and thus not an MST anymore.
+
+    [illustration]
+
+- Remember that in a connected graph, removing an edge that is part of a cycle does not disconnect the graph. No edge in the cycle matters more than another to the connectivity of the graph. So you can remove any one.
+
+    [illustration]
+
+- So by adding an edge to a tree, you get a cycle and lose the tree "status", but you maintain graph connectivity. To become a tree again, you just remove one of the edges from the new cycle.
+
+    [illustration]
+
+- Now if the edge that you added was the lightest of your replacement edges and the edge that you removed was the heaviest in the tree, the weight loss with each such swap would be optimal.
+
+- Thinking about it for a moment, you now have a strategy for creating a real MST with the replacement edges that you were given:
+
+    1. identify the heaviest edge in the tree.
+    2. make that edge a part of a cycle by adding a lighter replacement edge still in your possession.
+    3. remove the heavy edge.
+    4. repeat until none of your replacement edges is lighter than any edge currently in your tree.
+
+---
+For the purpose of discussing MST, it is useful to have some nomenclature to distinguish the different kinds of edges we have to deal with:
+- We identify the edges in our graph in three categories: 
+    - We'll call "Essential" edges those that are not part of any cycle, there are no alternative path to connect two nodes that forms them. They're a non-optional path to connect the tree. 
+        
+    [illustration]
+
+    - Let's call "Primary" edges those that satisfy the criteria for inclusion in a MST either because, they're the lightest edge in a cycle (there may be many edges in the same cycle that satisfy this criteria), or because they're Essential edges (all Essential edges are Primary edges). 
+
+    - "Alternative Primary" edges are the primary edges in a cycle that were not chosen to form the current tree (because another Primary edge in the same cycle was picked). Alternative Prmary edges offer a different structure for the MST. If you pick an Alternative Primary edge you need to exclude the previously selected Primary in the same cycle, then both edges swap status (the formerly Alternative becomes Primary and vice versa).  
+
+    [illustration]
+
+    - "Secondary" edges are those that are part of a cycle, but are not the lightest in the cycle. They do not satisfy the criteria to be a part of an MST.
+
+    [illustration]
+
+---
+
+In the previous graph, the edges used to replace the heavy ones were not originally a part of the graph. But imagine that instead of being given to you as replacement edges, to be placed as you wish, you're told that they're already part of graph in some way and you're tasked with creating an MST.
+
+- From what you've already learned a number of strategies can come to mind.
+    
+- Strategy 1 looks similar to what you've done before:
+
+    1. identify a cycle in the graph
+    2. remove its heaviest edge 
+    3. repeat until there are no more cycles
+
+In the above strategy we're identifying cycles in order to remove their heaviest edge. With this approach, any heavy edge that ends up in the tree does because there was no way around it, it's an Essential edge.
+
+
+Now consider the following alternative strategy that approaches the problem from a different angle.
+1. we select all edges in the graph from lightest to heaviest, but we limit our selection to the maximum allowed number of edges that can connect a tree with K nodes (that is, we only select K - 1 edges). 
+    
+What would the consequences of such a selection process be? It may likely result in creating some cyles if multiple lighter edges connect the same nodes, as some of these light edges might in fact be Alternative Primary edges or Secondary edges.
+
+    [illustration]
+    
+While having been selected because they're light, they're not crucial to the tree, but they take up space that would be occupied by some potentially heavier, but Essential edges. The result of such a selection process would likely be a partitioned graph whose components are isolated from each other, with some of the components having cycles. 
+   
+    [illustration]
+    
+The components are isolated because the Essential edges that were supposed to join them did not make the selection. The cycles are present because some Alternative and Secondary edges were included because they were among the lighter ones. 
+
+    [illustration]
+
+Note that for each missing Essential edge that could have connected two components, there's a cycle present somewhere in one of the components. In other words the total number of missing Essential edges should be equal to the total number of cycles.
+
+    [illustration]
+
+2. To fix the above situation, the solution would consist in removing the largest edge in any cycle (the redundant edge), while reintroducing each missing edge connecting two components.
+
+This strategy is of particular interest because it comes very close to Kruskal's reasoning. The difference is that in Kruskal's algorithm even though edges are selected from lighter to heavier, redundant edges (that could create a cycle) are ignored. Thus only relevant edges end up being included in the selection and all components are joined into a single tree.
+
+You should now have an intuition about why selecting the lightest edges that do not create a cycle is the way to approach the construction of an MST. It's time to present the more academic reasoning.
+
+---
+- remember that this is not a problem of "finding the lightest path between two nodes", it's rather a problem of "connecting *all* nodes with the minimum weith possible" 
+
+---
+
+When thinking about removing an edge from a cycle, there may be some worry that the removal of that edge has further, unintended, side effects, for example if that edge is also part of a different, neighboring, cycle. Imagine for a moment an edge that is shared by two cycles, but in such a way that in one cycle it represents the lightest edge, whereas in the other it is the heaviest. Could removing where it's the heaviest have unintended consequence where it's the lightest?
+
+    [illustration]
+
+If an edge is shared by two cycles, removing it simply merges the two cycles into one.
+
+    [illustration]
+
+Thus you should not worry about removing the largest edge from one cycle, fearing that it could be the smallest edge from another cycle. As the two cycles merge, you will still have the opportunity of removing the largest edge.
+
