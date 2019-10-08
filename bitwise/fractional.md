@@ -16,9 +16,9 @@ The subsequent fractional powers of 10 follow:
     0.001/10    0.0001      1/10⁴
     0.0001/10   0.00001     1/10⁵
 
-Because we're in base-10 each larger level represents ten of the smaller one directly below it. That is 1/10 is ten of 1/10², which is in turn ten of 1/10³.
+Because we're in base-10 each larger level represents ten of the smaller one directly underneath it. That is 1/10 is ten of 1/10², which is in turn ten of 1/10³.
 
-To be able to express a quantity accurately we need a way to express intermediary quantities between a level and the one directly below it. In base-10 there are ten symbols we can use to express primitive quantities (0, 1, 2, 3, 4, 5, 6, 7, 8, and 9). So, we can combine them along with the above fractionals to accurately describe a fractional quantity. For example
+To be able to express a quantity accurately we need a way to express intermediary quantities between a level and the one directly underneath it. In base-10 there are ten symbols we can use to express primitive quantities (0, 1, 2, 3, 4, 5, 6, 7, 8, and 9). So, we can combine them along with the above fractionals to accurately describe a fractional quantity. For example
 
     0.783029    =>  7 x 1/10¹
                 =>  8 x 1/10²
@@ -34,17 +34,17 @@ We can further create more base-2 fractional levels by subdividing 1 into differ
 
 the subsequent fractional powers of 2 follow, with their decimal equivalent:
 
-    bin         bin         bin         decimal
-    -------------------------------------------
-    1/2         0.1         1/2         .5
-    0.1/2       0.01        1/2²        .25
-    0.01/2      0.001       1/2³        .125
-    0.001/2     0.0001      1/2⁴        .0625
-    0.0001/2    0.00001     1/2⁵        .03125
+    bin         dec      |  bin         dec     |   bin         dec     
+    ---------------------|----------------------|-------------------
+    1/10        1/2      |  0.1         .5      |   1/10        1/2     
+    0.1/10      0.1/2    |  0.01        .25     |   1/100       1/2²    
+    0.01/10     0.01/2   |  0.001       .125    |   1/1000      1/2³    
+    0.001/10    0.001/2  |  0.0001      .0625   |   1/10000     1/2⁴    
+    0.0001/10   0.0001/2 |  0.00001     .03125  |   1/100000    1/2⁵    
 
-Since we're in base-2 each larger level represents two of the smaller one directly below it. That is 1/2 is two of 1/2², which is in turn two of 1/2³.
+Since we're in base-2 each larger level represents two of the smaller one directly underneath it. That is 1/2 is two of 1/2², which is in turn two of 1/2³.
 
-And since in base-2 we have only 2 symbols (0 and 1), to express a fractional value, we need to find the right combination of binary fractionals whose sum corresponds to the quantity we want to describe. That binary representaion can express the same quantity as its decimal counterpart, but can be considerably longer, which may impede to its practical accuracy. For instance, just contrast being able to express the decimal value 0.84 with just 3 digits versus its binary equivalent
+And since in base-2 we have only 2 symbols (0 and 1), to express a fractional value, we need to find the right combination of binary fractionals whose sum corresponds to the quantity we want to describe. That binary representaion can express the same quantity as its decimal counterpart, but can be considerably longer, which may impede to its practical accuracy in the real world (i.e. with computer). For instance, just contrast being able to express the decimal value 0.84 with just 3 digits versus its binary equivalent
 
     decimal to  binary
     -------     -------
@@ -57,26 +57,26 @@ And since in base-2 we have only 2 symbols (0 and 1), to express a fractional va
                 =>  1 x 1/10⁷
                 =>  1 x 1/10⁸
                 =>  0 x 1/10⁹
-                ...
+
+                ...and on and on...
                 
 
 ### A few useful observations from the above:
 
-- Similarly to the way that doubling a binary value shifts its bit values to the left, halving a binary value shifts its bit values to the right.
+When multiplying a base-10 number by ten, you shift all its digits to the left, including the ones to the right of the period (which are theoretical zeros for a whole number). When dividing a base-10 number you do the opposite, you shift all digits to the right.
 
-The above implies that if I have decimal value 0.725 which is the binary equivalent 0.11, by twice doubling the latter I'm shifting it twice to the left to become binary 11. We can verify that 0.725 * 2 * 2 = 3, which is indeed 11 in binary.
+Similarly, multiplying a base-2 number by two results in shifting all its digits to the left and dividing by two shifts all digits to the right
 
-- The first fractional power of 2 has the decimal value of 0.5, the result of 1/2¹. Any value equal or larger than decimal 0.5 and less than 1 is also contained between binary 0.1 and 1.  
+The above implies that if I have decimal value 0.725 which is the binary equivalent 0.11, by twice doubling the latter I'm shifting it twice to the left to become binary 11. It's easy enough to verify that 0.725 * 2 * 2 = 3, is indeed 11 in binary.
+
+Dividing 1 by 2 gives us 0.5 in base-10, but in base-2 it's 0.1 (shifted to the right). This is the first fractional power of 2, the result of 1/2¹. Any value equal or larger than decimal 0.5 and less than 1 is also contained between binary 0.1 and 1.  
 
 i.e. the following are equivalent:
 
     base-10:  0 [.......] 0.5 [.......] 1 
     base-2 :  0 [.......] 0.1 [.......] 1 
 
-- A corollary of the above is that any value between decimal .5 and 1 in its binary expression has a leading 1 bit set right after the period.
-
-    e.g. 0.5293, 0.73882, 0.99382, 0.6783 when expressed in binary all begin like 0.1...
-    whereas 0.4923, 0.2893, 0.10293 when expressed in binary will all begin like 0.0...
+A side-effect of the above is that any value between decimal .5 and 1 in its binary expression has a leading 1 bit set right after the period. That is, 0.5293, 0.73882, 0.99382, 0.6783 when expressed in binary all begin like 0.1...  whereas 0.4923, 0.2893, 0.10293 when expressed in binary will all begin like 0.0...
 
 This gives us the basis of a scheme to write any base-10 value containing fractional parts in its binary form.   
 
