@@ -67,20 +67,20 @@ When multiplying a base-10 number by ten, you shift all its digits to the left, 
 
 Similarly, multiplying a base-2 number by two results in shifting all its digits to the left and dividing by two shifts all digits to the right
 
-The above implies that if I have decimal value 0.725 which is the binary equivalent 0.11, by twice doubling the latter I'm shifting it twice to the left to become binary 11. It's easy enough to verify that 0.725 * 2 * 2 = 3, is indeed 11 in binary.
+The above implies that if I have decimal value `0.725` which is the binary equivalent `0.11`, by twice doubling the latter I'm shifting it twice to the left to become binary `11`. It's easy enough to verify that `0.725 * 2 * 2 = 3`, is indeed `11` in binary.
 
-Dividing 1 by 2 gives us 0.5 in base-10, but in base-2 it's 0.1 (shifted to the right). This is the first fractional power of 2, the result of 1/2¹. Any value equal or larger than decimal 0.5 and less than 1 is also contained between binary 0.1 and 1.  
+Dividing `1` by `2` gives us `0.5` in base-10, but in base-2 that's `0.1` (remember, in base-2 to divide by two we can simply shift to the right). This implies that any value larger than decimal `0.5` and less than `1` is also larger than binary `0.1` and less than `1`.  
 
 i.e. the following are equivalent:
 
     base-10:  0 [.......] 0.5 [.......] 1 
     base-2 :  0 [.......] 0.1 [.......] 1 
 
-A side-effect of the above is that any value between decimal .5 and 1 in its binary expression has a leading 1 bit set right after the period. That is, 0.5293, 0.73882, 0.99382, 0.6783 when expressed in binary all begin like 0.1...  whereas 0.4923, 0.2893, 0.10293 when expressed in binary will all begin like 0.0...
+A side-effect of the above is that any value between decimal `0.5` and `1` in its binary representation has `1` bit set right after the period. That is, `0.5293`, `0.73882`, `0.99382`, `0.6783` when expressed in binary all begin like `0.1...`  whereas `0.4923`, `0.2893`, `0.10293` when expressed in binary will all begin like `0.0...`.
 
 This gives us the basis of a scheme to write any base-10 value containing fractional parts in its binary form.   
 
-- First thing is to check whether the value is larger than 1. If it is, we should isolate its integer and fractional parts and process them separately.
+- First thing is to check whether the value is larger than `1`. If it is, we should isolate its integer and fractional parts and process them separately.
 
 - now that we have the isolated fractional part, we can process it.
 
